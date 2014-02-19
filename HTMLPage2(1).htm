@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="menu.css" type="text/css" rel="stylesheet"/>
+    <script src="jquery-min.js" type="text/javascript"></script>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var data = "";
+        debugger;
+        $.getJSON("data.js", function(json) {
+        data = json;
+        if (data != null) {
+            $.each(data, function() {
+                var html = "";
+
+                if (this.id == 1)
+                    html = '<div valign="top"><div id="' + "outer" + this.id + '" style="-khtml-border-radius: 5px 0px 0px 0px; border-radius: 5px 0px 0px 0px; -moz-border-radius:5px 0px 0px 0px; -webkit-border-radius:5px 0px 0px 0px;"  valign="top" ' + ' onclick="javascript:ShowHide(' + this.id + ');"' + ' class="menulink"><b>' + this.firstName + ' ' + this.lastName + '</b></div></div>';
+                else if (this.id == 10)
+                    html = '<div valign="top"><div id="' + "outer" + this.id + '" style=" -khtml-border-radius: 0px 0px 0px 5px; border-radius: 0px 0px 0px 5px; -moz-border-radius:0px 0px 0px 5px; -webkit-border-radius:0px 0px 0px 5px;"  valign="top" ' + ' onclick="javascript:ShowHide(' + this.id + ');"' + ' class="menulink"><b>' + this.firstName + ' ' + this.lastName + '</b></div></div>';
+                else
+                    html = '<div valign="top"><div id="' + "outer" + this.id + '" valign="top" ' + ' onclick="javascript:ShowHide(' + this.id + ');"' + ' class="menulink"><b>' + this.firstName + ' ' + this.lastName + '</b></div></div>';
+
+                var html1 = "";
+                if (this.id == 1)
+                    html1 = '<div id="' + "inner" + this.id + '" style="visibility:visible; " class="abc"><div   style="float:left; " > <img class="img" src="' + this.picture + '" width="80" style="margin-right:10px;border-width: 2px solid #000000; border-color:black; "   height="80"/></div><div ><b>' + this.firstName + ' ' + this.lastName + '</b></div><div style=" float:none;"><p  style="margin:15 15 15 15;"><font font-family:"arial">' + this.bio + '</font> </p></div>   </div>           ';
+                else
+                    html1 = '<div id="' + "inner" + this.id + '" style="visibility:hidden;" class="abc"><div   style="float:left; " > <img class="img" src="' + this.picture + '" width="80" style="margin-right:10px; border-width: 2px solid #000000; border-color:black; "   height="80"/></div><div ><b>' + this.firstName + ' ' + this.lastName + '</b></div><div style=" float:none;"><p style="margin:15 15 15 15;"><font font-family:"arial">' + this.bio + '</font></p> </div>   </div>           ';
+                $("#tableMain").append(html);
+                $("#tdData").append(html1);
+
+            });
+        }
+        });
+    });
+
+    function ShowHide(id) {
+        $(".abc").hide();
+        $("#inner" + id).show();
+        document.getElementById("inner" + id).style.visibility = "visible";
+        document.getElementById("inner" + id).visible = true;
+            $("div").each(function () { 
+                $(this).removeClass('menulinkselected');
+            });
+        $("#outer" + id).addClass('menulinkselected');
+        document.getElementById("outer" + id).style.className = "menulinkselected";
+    }
+</script>
+
+
+
+</head>
+<body>
+
+
+<div class="span8center"    >
+ <div  class="mainheading">
+          Profile Browser
+          </div>
+      <div class="rowfluid" >
+     
+        <div class="rowfluid" >
+         <div class="span21"   >
+           <div class="mainmenu"  id="tableMain" >
+           </div >
+         </div>
+         <div class="span4"  id="tdData"  >
+         </div>
+       </div>
+    </div>
+ </div>
+ 
+</body>
+</html>

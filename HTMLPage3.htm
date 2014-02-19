@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="menu.css" type="text/css" rel="stylesheet"/>
+    <script src="jquery-min.js" type="text/javascript"></script>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <script type="text/javascript" src="underscore-min.js"></script>
+    
+    <script type="text/html" id='usageList'>
+    <div class="span8center">
+     <div class="mainheading">
+              Profile Browser
+              </div>
+          <div class="rowfluid">
+            <div class="rowfluid">
+             <div class="span21">
+               <div class="mainmenu"  id="tableMain">
+                  <%
+                        _.each(items,function(item,key,list){
+                  %>
+                  <% if (item.id == 1 ) { %>
+                   <div valign="top">
+                   <div id='outer<%= item.id  %>' style="-khtml-border-radius: 5px 0px 0px 0px; border-radius: 5px 0px 0px 0px; -moz-border-radius:5px 0px 0px 0px; -webkit-border-radius:5px 0px 0px 0px;"  valign="top"  onclick="javascript:ShowHide('<%= item.id  %>');"  class="menulink">
+                   <b><%= item.firstName  %> <%= item.lastName  %></b>
+                   </div>
+                   </div>
+                   <% } else if(item.id ==10) {  %>
+                   <div valign="top">
+                   <div id='outer<%= item.id  %>' style=" -khtml-border-radius: 0px 0px 0px 5px; border-radius: 0px 0px 0px 5px; -moz-border-radius:0px 0px 0px 5px; -webkit-border-radius:0px 0px 0px 5px;"  valign="top" onclick="javascript:ShowHide('<%= item.id  %>');" class="menulink">
+                   <b><%= item.firstName  %> <%= item.lastName  %></b>
+                   </div>
+                   </div>
+                   <% } else { %>
+                    <div valign="top">
+                   <div id='outer<%= item.id  %>' valign="top"  onclick="javascript:ShowHide('<%= item.id  %>');"  class="menulink">
+                   <b><%= item.firstName  %> <%= item.lastName  %>
+                   </b>
+                   </div>
+                   </div>
+                   <%  } %>
+                  
+                <% }); %>
+               </div>
+              </div>
+              <div class="span4"  id="tdData">
+                 <%
+                    _.each(items,function(item,key,list){
+                  %>
+                  <% if (item.id == 1 ) { %>
+                  <div id='inner<%= item.id  %>' style="visibility:visible; " class="abc"><div   style="float:left; " > <img class="img" src='<%= item.picture  %>' width="80" style="margin-right:10px;border-width: 2px solid #000000; border-color:black; "   height="80"/></div><div ><b><%= item.firstName  %> <%= item.lastName  %></b></div><div style=" float:none;"><p  style="margin:15 15 15 15;"><font font-family:"arial"><%= item.bio  %></font> </p></div>   </div>
+                  <% } else { %>  
+                  <div id='inner<%= item.id  %>' style="visibility:hidden;" class="abc"><div   style="float:left; " > <img class="img" src='<%= item.picture  %>' width="80" style="margin-right:10px; border-width: 2px solid #000000; border-color:black; "   height="80"/></div><div ><b><%= item.firstName  %> <%= item.lastName  %></b></div><div style=" float:none;"><p style="margin:15 15 15 15;"><font font-family:"arial"><%= item.bio  %></font></p> </div>   </div>
+                  <%} %>
+                <% }); %>
+              </div>
+         </div>
+        </div>
+     </div>
+    </script>  
+</head>
+<body>
+<!-- Create your target -->
+
+<div id="target" style="margin-left:20%;margin-right:20%; padding-left:auto;padding-right:auto;"></div>
+
+<!-- Write some code to fetch the data and apply template -->
+
+<script type="text/javascript">
+    var items = "";
+
+    $(document).ready(function() {
+        var data = "";
+        $.getJSON("data.js", function(json) {
+            data = json;
+            items = json;
+            if (data != null) {
+                    var template = $("#usageList").html();
+                    $("#target").html(_.template(template, { items: items }));
+            }
+        });
+    });
+    function ShowHide(id) {
+        $(".abc").hide();
+        $("#inner" + id).show();
+        document.getElementById("inner" + id).style.visibility = "visible";
+        document.getElementById("inner" + id).visible = true;
+        $("div").each(function() {
+            $(this).removeClass('menulinkselected');
+        });
+        $("#outer" + id).addClass('menulinkselected');
+        document.getElementById("outer" + id).style.className = "menulinkselected";
+    }
+</script>
+
+
+ 
+</body>
+</html>
